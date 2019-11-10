@@ -5,14 +5,14 @@
 #define N_MAX_BET			5
 void bat(int numpy){
 	
+	printf("\n-------batting step-------\n");
 	int coin1;
 	
 	int fund[N_MAX_USER]={50,50,50,50,50};
 	int coin[N_MAX_USER];
 	int *fc=fund;
 	
-	printf("How much do you want to bat? ($%d) : ",fc[0],coin[0]);
-	
+	printf("-> your betting (total:$%d) : ",fc[0]);
 	scanf("%d", &coin[0]);
 	
 	srand(time(NULL));
@@ -22,8 +22,6 @@ void bat(int numpy){
 	coin[3] = rand()% N_MAX_BET+1;
 	coin[4] = rand()% N_MAX_BET+1;
 	
-	
-	printf("-> your betting (total:%d) : %d\n",fc[0],coin[0]);
 	
 	int i;
 	for (i=1;i<numpy;i++)

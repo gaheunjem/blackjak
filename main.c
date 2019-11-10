@@ -11,16 +11,13 @@ int main(void) {
 	int numpy;
 	int start;
 	
-	printf("######blackjak######\n");
-	printf("enter 1 to start game\n");
-	scanf("%d",&start);
-	if(start==1)
-	{
-		printf("enter number of player(1~5): ");
-	}
+	printf("####################\n");
+	printf("######BLACKJAK######\n");
+	printf("####################\n\n");
 	
+	printf("input the number of players (MAX:5) : ");
+
 	scanf("%d",&numpy);
-	
 	
 	bat(numpy);
 	
