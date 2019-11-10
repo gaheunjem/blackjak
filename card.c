@@ -31,7 +31,7 @@ void CardTray()
 		cardnum[i] = cardnum[rn1];
 		cardnum[rn1] = temp1;
 	}
-	
+	// switch array order 
 	int temp2;
 	int rn2;
 	int j;
