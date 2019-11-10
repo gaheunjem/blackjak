@@ -2,22 +2,26 @@
 #include <time.h> 
 #include <stdlib.h>
 
-
- 
-
-
-
-void CardTray()
-{
-	
-	
-	int cardnum[]={'A','2','3','4','5','6','7','8','9','10','J','Q','K',
+int cardnum[]={'A','2','3','4','5','6','7','8','9','10','J','Q','K',
 	'A','2','3','4','5','6','7','8','9','10','J','Q','K',
 	'A','2','3','4','5','6','7','8','9','10','J','Q','K',
 	'A','2','3','4','5','6','7','8','9','10','J','Q','K'};
 	int cardshape[] = {'H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D'
 	,'H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D'
 	,'H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D'};
+
+
+void PrintCard(int n)
+{
+	printf ("%c%c",cardshape[n],cardnum[n]);
+}
+
+
+void MixCard()
+{
+	
+	
+	
 	
 	srand(time(NULL));
 	
@@ -44,7 +48,10 @@ void CardTray()
 		cardshape[rn2] = temp2;
 	}
 	
-	printf ("%c%c",cardshape[1],cardnum[1]);
+
+	
+	
+
 	
 	
 	
