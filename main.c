@@ -9,7 +9,7 @@ extern int Card[N_CARDSET*N_CARD];
 
 int main(void) {
 	
-	int numpy;
+	int n_user;
 	int start;
 	
 	printf("####################\n");
@@ -18,16 +18,14 @@ int main(void) {
 	
 	printf("input the number of players (MAX:5) : ");
 
-	scanf("%d",&numpy);
+	scanf("%d",&n_user);
 	
 	mixCardTray();
 	
-	betDollar(numpy);
-	betDollar(numpy);
-
-	int i;
+	betDollar(n_user);
 	
-	for(i=0;i<52;i++)
+	int i;
+	for(i=1;i<5;i++)
 		printCard(i);
 	
 		

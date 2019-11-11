@@ -8,7 +8,7 @@
 	int coin[N_MAX_USER];
 	int *fc=fund;
 
-void betDollar(int numpy){
+void betDollar(int n_user){
 	
 	printf("\n-------batting step-------\n");
 	int coin1;
@@ -27,7 +27,7 @@ void betDollar(int numpy){
 	
 	
 	int i;
-	for (i=1;i<numpy;i++)
+	for (i=1;i<n_user;i++)
 	{
 		printf("-> player%d bets $%d (out of $%d)\n",i,coin[i],fc[i]);
 	}

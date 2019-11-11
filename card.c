@@ -3,16 +3,18 @@
 #include <stdlib.h>
 #define N_CARDSET			1
 #define N_CARD				52
+#define N_MAX_USER			5
+#define N_MAX_CARDHOLD		10
 
 
+int cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];
 int Card[N_CARDSET*N_CARD];
 int *cd=Card;
  
 void swap(int *A, int *B);                  
-
 void rndCard(int* card, int size);   
 char ncard;//card number
-char scard;//card shape
+char scard[4];//card shape
 
 int mixCardTray()
 {
@@ -22,40 +24,27 @@ int mixCardTray()
 
 	srand((unsigned int)time(NULL));    
 
- 	for(i = 0; i < N_CARDSET*N_CARD; i++)           
-
+ 	for(i=0;i< N_CARDSET*N_CARD;i++)           
     {
-
         cd[i] = i;
-
     }
 
-    
+    rndCard(cd,N_CARDSET*N_CARD);        
 
-    rndCard(cd, N_CARDSET*N_CARD);        
-
- 
-
-    for(i = 0; i < N_CARDSET*N_CARD; i++)             
+    for(i=0;i<N_CARDSET*N_CARD;i++)             
 
     {
-
-        printf("%d ", cd[i]);
-
+        printf("%d ",cd[i]);
     }
 
     printf("\n");
-
-    
+   
 	printf("--> card is mixed and put into the tray");
- 
-
 }   
 
 void getCardNum(int cardnum)
 {	
-	
-	
+
 	if(cardnum%13==1)
 		ncard = 'A';
 	else if(cardnum%13==2) 
@@ -85,13 +74,13 @@ void getCardNum(int cardnum)
 		
 	
 	if(cardnum%4==1) 
-		scard = 'H';
+		strcpy(scard,"HRT");
 	else if(cardnum%4==2) 
-		scard = 'D';
+		strcpy(scard,"DIA");
 	else if(cardnum%4==3) 
-		scard = 'S';	
+		strcpy(scard,"CLV");	
 	else  
-		scard = 'C';		
+		strcpy(scard,"SPD");//??		
 	
 	
 }
@@ -100,42 +89,51 @@ void getCardNum(int cardnum)
 void printCard(int cardnum) 
 {
 	getCardNum(cd[cardnum]);
-	printf("%c%c\n",scard,ncard); 	
+	printf("%s%c\n",scard,ncard);
 }
- 
+
+int pullCard()
+{
+	return Card[rand()%52];//?? 
+}
+
+
+/*void offerCards(void) {
+	
+	int i;
+	//1. give two card for each players
+	for (i=0;i<n_user;i++)
+	{
+		cardhold[i][0] = pullCard();
+		cardhold[i][1] = pullCard();
+	}
+	//2. give two card for the operator
+	cardhold[n_user][0] = pullCard();
+	cardhold[n_user][1] = pullCard();
+	
+}*/
+void printCardInitialStatus(void) {
+	
+}
 
 void rndCard(int* card, int size)   
-
 {
-
     int i; 
 
- 
-
-    for(i = 0; i < size; i++)
-
+ 	for(i=0; i<size;i++)
     {
-
-        swap(&card[i], &card[(rand() % (N_CARDSET*N_CARD - i)) + i]);   
-
+		swap(&card[i],&card[(rand() % (size - i)) + i]);   
     }
-
 }
 
  
 void swap(int* A, int* B)
-
 {
-
     int temp;
-
  
 	temp = *A;
-
     *A = *B;
-
-    *B = temp;  
-
+	*B = temp;  
 }
 
 
