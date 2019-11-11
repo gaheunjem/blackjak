@@ -4,60 +4,140 @@
 #define N_CARDSET			1
 #define N_CARD				52
 
-void swap(int*A,int*B)
-{
-	int temp;
-	
-	temp =*A;
-	*A=*B;
-	*B=temp;
-}
 
-void randomCard(int*card, int CARDSIZE)
-{
-	int i;
-	
-	for(i=0;i<CARDSIZE;i++)
-	{
-		swap(&card[i],&card[rand()%51+i]);
-	}
-}
-	
-int PrintCard(int n)
-{
-	
-}
+int Card[N_CARDSET*N_CARD];
+int *cd=Card;
+ 
+void swap(int *A, int *B);                  
 
+void rndCard(int* card, int size);   
+char ncard;//card number
+char scard;//card shape
 
-void mixCardTray()
+int mixCardTray()
 {
-	
-	int Card[52];
-	int i;
-	
-	srand((unsigned int)time(NULL));
-	
-	for(i=0;i<52;i++)
-	{
-		Card[i]=i;
-	}
-	
-	randomCard(Card,52);
-	
-	for(i=0;i<52;i++)
-	{
-	printf("%d\n",Card[i]);
-	}
-	
+	int Card[N_CARDSET*N_CARD];                     
+
+    int i;                                             
+
+	srand((unsigned int)time(NULL));    
+
+ 	for(i = 0; i < N_CARDSET*N_CARD; i++)           
+
+    {
+
+        cd[i] = i;
+
+    }
+
+    
+
+    rndCard(cd, N_CARDSET*N_CARD);        
+
+ 
+
+    for(i = 0; i < N_CARDSET*N_CARD; i++)             
+
+    {
+
+        printf("%d ", cd[i]);
+
+    }
+
+    printf("\n");
+
+    
 	printf("--> card is mixed and put into the tray");
+ 
+
+}   
+
+void getCardNum(int cardnum)
+{	
+	
+	
+	if(cardnum%13==1)
+		ncard = 'A';
+	else if(cardnum%13==2) 
+		ncard = '2';
+	else if(cardnum%13==3) 
+		ncard = '3';
+	else if(cardnum%13==4) 
+		ncard = '4';
+	else if(cardnum%13==5) 
+		ncard = '5';
+	else if(cardnum%13==6) 
+		ncard = '6';
+	else if(cardnum%13==7) 
+		ncard = '7';
+	else if(cardnum%13==8) 
+		ncard = '8';
+	else if(cardnum%13==9) 
+		ncard = '9';
+	else if(cardnum%13==10) 
+		ncard = '10';
+	else if(cardnum%13==11) 
+		ncard = 'J';
+	else if(cardnum%13==12) 
+		ncard = 'K';
+	else  
+		ncard = 'Q';
+		
+	
+	if(cardnum%4==1) 
+		scard = 'H';
+	else if(cardnum%4==2) 
+		scard = 'D';
+	else if(cardnum%4==3) 
+		scard = 'S';	
+	else  
+		scard = 'C';		
 	
 	
 }
 
- 	
-	
-
-void offerCard()
+//print the card information (e.g. DiaA)
+void printCard(int cardnum) 
 {
-	
+	getCardNum(cd[cardnum]);
+	printf("%c%c\n",scard,ncard); 	
 }
+ 
+
+void rndCard(int* card, int size)   
+
+{
+
+    int i; 
+
+ 
+
+    for(i = 0; i < size; i++)
+
+    {
+
+        swap(&card[i], &card[(rand() % (N_CARDSET*N_CARD - i)) + i]);   
+
+    }
+
+}
+
+ 
+void swap(int* A, int* B)
+
+{
+
+    int temp;
+
+ 
+	temp = *A;
+
+    *A = *B;
+
+    *B = temp;  
+
+}
+
+
+
+
