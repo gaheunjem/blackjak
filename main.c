@@ -19,7 +19,9 @@ int main(void) {
 
 	scanf("%d",&numpy);
 	
-	bat(numpy);
+	mixCardTray();
+	
+	betDollar(numpy);
 	
 	
 	

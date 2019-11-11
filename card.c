@@ -1,59 +1,63 @@
 #include <stdio.h>
 #include <time.h> 
 #include <stdlib.h>
+#define N_CARDSET			1
+#define N_CARD				52
 
-int cardnum[]={'A','2','3','4','5','6','7','8','9','10','J','Q','K',
-	'A','2','3','4','5','6','7','8','9','10','J','Q','K',
-	'A','2','3','4','5','6','7','8','9','10','J','Q','K',
-	'A','2','3','4','5','6','7','8','9','10','J','Q','K'};
-	int cardshape[] = {'H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D'
-	,'H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D'
-	,'H','S','C','D','H','S','C','D','H','S','C','D','H','S','C','D'};
-
-
-void PrintCard(int n)
+void swap(int*A,int*B)
 {
-	printf ("%c%c",cardshape[n],cardnum[n]);
+	int temp;
+	
+	temp =*A;
+	*A=*B;
+	*B=temp;
+}
+
+void randomCard(int*card, int CARDSIZE)
+{
+	int i;
+	
+	for(i=0;i<CARDSIZE;i++)
+	{
+		swap(&card[i],&card[rand()%51+i]);
+	}
+}
+	
+int PrintCard(int n)
+{
+	
 }
 
 
-void MixCard()
+void mixCardTray()
 {
 	
-	
-	
-	
-	srand(time(NULL));
-	
-	int temp1;
-	int rn1;
+	int Card[52];
 	int i;
-	for (i=0;i<52;i++)
-	{
-		rn1 = rand()% 52;
-		temp1 = cardnum[i];
-		cardnum[i] = cardnum[rn1];
-		cardnum[rn1] = temp1;
-	}
-	// switch array order 
-	int temp2;
-	int rn2;
-	int j;
 	
-	for (j=0;j<52;j++)
+	srand((unsigned int)time(NULL));
+	
+	for(i=0;i<52;i++)
 	{
-		rn2 = rand()% 52;
-		temp2 = cardshape[j];
-		cardshape[j] = cardshape[rn2];
-		cardshape[rn2] = temp2;
+		Card[i]=i;
 	}
 	
+	randomCard(Card,52);
+	
+	for(i=0;i<52;i++)
+	{
+	printf("%d\n",Card[i]);
+	}
+	
+	printf("--> card is mixed and put into the tray");
+	
+	
+}
 
-	
+ 	
 	
 
-	
-	
-	
+void offerCard()
+{
 	
 }
