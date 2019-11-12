@@ -24,9 +24,7 @@ int main(void) {
 	
 	betDollar(n_user);
 	
-	int i;
-	for(i=1;i<5;i++)
-		printCard(i);
+	PRINT();
 	
 		
 	

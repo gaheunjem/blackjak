@@ -13,8 +13,7 @@ int *cd=Card;
  
 void swap(int *A, int *B);                  
 void rndCard(int* card, int size);   
-char ncard;//card number
-char scard[4];//card shape
+
 
 int mixCardTray()
 {
@@ -45,52 +44,69 @@ int mixCardTray()
 void getCardNum(int cardnum)
 {	
 
-	if(cardnum%13==1)
-		ncard = 'A';
-	else if(cardnum%13==2) 
-		ncard = '2';
-	else if(cardnum%13==3) 
-		ncard = '3';
-	else if(cardnum%13==4) 
-		ncard = '4';
-	else if(cardnum%13==5) 
-		ncard = '5';
-	else if(cardnum%13==6) 
-		ncard = '6';
-	else if(cardnum%13==7) 
-		ncard = '7';
-	else if(cardnum%13==8) 
-		ncard = '8';
-	else if(cardnum%13==9) 
-		ncard = '9';
-	else if(cardnum%13==10) 
-		ncard = '10';
-	else if(cardnum%13==11) 
-		ncard = 'J';
-	else if(cardnum%13==12) 
-		ncard = 'K';
-	else  
-		ncard = 'Q';
-		
-	
-	if(cardnum%4==1) 
-		strcpy(scard,"HRT");
-	else if(cardnum%4==2) 
-		strcpy(scard,"DIA");
-	else if(cardnum%4==3) 
-		strcpy(scard,"CLV");	
-	else  
-		strcpy(scard,"SPD");//??		
-	
 	
 }
 
 //print the card information (e.g. DiaA)
 void printCard(int cardnum) 
 {
-	getCardNum(cd[cardnum]);
-	printf("%s%c\n",scard,ncard);
+	switch(cardnum/13){
+	
+	case 0:
+		printf("HRT");
+		break;
+	case 1:
+		printf("DIA");
+		break;
+	case 2:
+		printf("CLV");
+		break;	
+	case 3:
+		printf("SPD");
+		break;
 }
+	
+	if(cardnum%13==1)
+		printf("Ace");
+	else if(cardnum%13==2)
+		printf("2");	
+	else if(cardnum%13==3)
+		printf("3");
+	else if(cardnum%13==4)
+		printf("4");
+	else if(cardnum%13==5)
+		printf("5");	
+	else if(cardnum%13==6)
+		printf("6");
+	else if(cardnum%13==7)
+		printf("7");
+	else if(cardnum%13==8)
+		printf("8");
+	else if(cardnum%13==9)
+		printf("9");
+	else if(cardnum%13==10)
+		printf("10");	
+	else if(cardnum%13==11)
+		printf("Jack");
+	else if(cardnum%13==12)
+		printf("Queen");
+	else 
+		printf("King");
+		
+							
+}
+
+
+int PRINT()
+{	
+	int i;
+	for(i=0;i<52;i++){
+	
+		printCard(cd[i]);
+		printf("\n");
+	}
+}
+
 
 int pullCard()
 {
@@ -98,8 +114,9 @@ int pullCard()
 }
 
 
-/*void offerCards(void) {
+void offerCards(void) {
 	
+	int n_user;
 	int i;
 	//1. give two card for each players
 	for (i=0;i<n_user;i++)
@@ -111,7 +128,8 @@ int pullCard()
 	cardhold[n_user][0] = pullCard();
 	cardhold[n_user][1] = pullCard();
 	
-}*/
+}
+
 void printCardInitialStatus(void) {
 	
 }
