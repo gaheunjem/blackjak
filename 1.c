@@ -178,7 +178,7 @@ int mixCardTray(void) {
 
     printf("\n");
    
-	printf("--> card is mixed and put into the tray");
+	printf("--> card is mixed and put into the tray\n");
 }
 
 //get one card from the tray
@@ -224,7 +224,7 @@ int betDollar(void) {
 }
 
 
-//offering initial 2 cards
+//offering initial 2 cards / 한 사람당 한 장씩 두 번 나눠주는 걸로 바꿔 
 void offerCards(void) {
 	int i;
 	//1. give two card for each players
@@ -245,14 +245,24 @@ void printCardInitialStatus(void) {
 	
 	int i;
 	
-	/*printCard([n_user][0]);
-	printCard([n_user][1]);*/
+	printf("----------- CARD OFFERING ---------------\n");
 	
-	for(i=0;i<n_user;i++)
+	printf("--- server      : X ");
+	printCard(cardhold[n_user][1]);
+	printf("\n");
+	
+	printf("  -> you        : ");
+	printCard(cardhold[0][0]);
+	printf(" ");
+	printCard(cardhold[0][1]);
+	printf("\n");
+	
+	for(i=1;i<n_user;i++)
 	{
-		printf("\n");
-		printf("%d -->",i);
+		
+		printf("  -> player %d   : ",i);
 		printCard(cardhold[i][0]);
+		printf(" ");
 		printCard(cardhold[i][1]); 
 		printf("\n");	
 	}
