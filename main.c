@@ -2,7 +2,22 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define N_CARDSET			1
+#define N_CARD				52
+#define N_DOLLAR			50
+
+
+#define N_MAX_CARDNUM		13
+#define N_MAX_USER			5
+#define N_MAX_CARDHOLD		10
+#define N_MAX_GO			17
+#define N_MAX_BET			5
+
+#define N_MIN_ENDCARD		30
+
 int n_user;
+extern int CardTray[N_CARDSET*N_CARD];
+
 
 int main(int argc, char *argv[]) {
 	
@@ -19,7 +34,6 @@ int main(int argc, char *argv[]) {
 	scanf("%d",&n_user);
 	
 	
-	
 	srand((unsigned)time(NULL));
 	
 	//set the number of players
@@ -31,7 +45,10 @@ int main(int argc, char *argv[]) {
 	
 	//2. card tray
 	mixCardTray();
-
+	
+	offerCards();
+	
+	printCardInitialStatus();
 
 
 	//Game start --------

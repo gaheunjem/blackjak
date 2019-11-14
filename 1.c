@@ -15,7 +15,7 @@
 
 #define N_MIN_ENDCARD		30
 
-int cardcnt=0;
+int cardorder=0;
 
 
 //card tray object
@@ -64,23 +64,51 @@ void rndCard(int* CardTray, int size) //used in MixCardTray()
 
  	for(i=0;i<size;i++)
     {
-		swap(&CardTray[i],&CardTray[(rand() % (size - i)) + i]); 
+		swap(&CardTray[i],&CardTray[(rand()%(size - i))+i]); 
 		  
     }
 }
 
  
-
 //card processing functions ---------------
 
 //calculate the actual card number in the blackjack game
 int getCardNum(int cardnum) {
+	
+	if(cardnum%13==1)
+		printf("Ace");
+	else if(cardnum%13==2)
+		printf("2");	
+	else if(cardnum%13==3)
+		printf("3");
+	else if(cardnum%13==4)
+		printf("4");
+	else if(cardnum%13==5)
+		printf("5");	
+	else if(cardnum%13==6)
+		printf("6");
+	else if(cardnum%13==7)
+		printf("7");
+	else if(cardnum%13==8)
+		printf("8");
+	else if(cardnum%13==9)
+		printf("9");
+	else if(cardnum%13==10)
+		printf("10");	
+	else if(cardnum%13==11)
+		printf("Jack");
+	else if(cardnum%13==12)
+		printf("Queen");
+	else 
+		printf("King");
+		
+	
 }
 
 //print the card information (e.g. DiaA)
 void printCard(int cardnum) {
 	
-	switch(cardnum/13){
+	switch(cardnum/(N_CARDSET*13)){
 	
 	case 0:
 		printf("HRT");
@@ -122,8 +150,7 @@ void printCard(int cardnum) {
 		printf("Queen");
 	else 
 		printf("King");
-		
-							
+				
 }
 
 
@@ -143,11 +170,11 @@ int mixCardTray(void) {
 
     rndCard(CardTray,N_CARDSET*N_CARD);        
 
-    for(i=0;i<N_CARDSET*N_CARD;i++)             
-
-    {
-        printf("%d ",CardTray[i]);
-    }
+//    for(i=0;i<N_CARDSET*N_CARD;i++)             
+//
+//    {
+//        printf("%d ",CardTray[i]);
+//    }
 
     printf("\n");
    
@@ -157,9 +184,11 @@ int mixCardTray(void) {
 //get one card from the tray
 int pullCard(void) {
 	
-	return CardTray[cardcnt];
+   	cardorder++;	
+	
+	return CardTray[cardorder-1];
+	
 
-	cardcnt++;
 }
 
 
@@ -174,6 +203,8 @@ int configUser(void) {
 //betting
 int betDollar(void) {
 	
+	int i;
+	
 	printf("\n-------batting step-------\n");
 	
 	printf("-> your betting (total:$%d) : ",dollar[N_MAX_USER]);
@@ -182,15 +213,10 @@ int betDollar(void) {
 	
 	srand((unsigned int)time(NULL));
 	
-	bet[1] = rand()% N_MAX_BET+1;
-	bet[2] = rand()% N_MAX_BET+1;
-	bet[3] = rand()% N_MAX_BET+1;
-	bet[4] = rand()% N_MAX_BET+1;
-	
-	
-	int i;
+
 	for (i=1;i<n_user;i++)
 	{
+		bet[i] = rand()% N_MAX_BET+1;
 		printf("-> player%d bets $%d (out of $%d)\n",i,bet[N_MAX_USER],dollar[N_MAX_USER]);
 	}
 	
@@ -216,6 +242,21 @@ void offerCards(void) {
 
 //print initial card status
 void printCardInitialStatus(void) {
+	
+	int i;
+	
+	/*printCard([n_user][0]);
+	printCard([n_user][1]);*/
+	
+	for(i=0;i<n_user;i++)
+	{
+		printf("\n");
+		printf("%d -->",i);
+		printCard(cardhold[i][0]);
+		printCard(cardhold[i][1]); 
+		printf("\n");	
+	}
+		
 	
 }
 
