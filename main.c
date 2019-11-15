@@ -15,9 +15,13 @@
 
 #define N_MIN_ENDCARD		30
 
-int n_user;
-extern int CardTray[N_CARDSET*N_CARD];
 
+extern gameEnd = 0;
+int Cardcnt[N_MAX_USER]={2,2,2,2,2};
+extern cardSum[N_MAX_USER];
+extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];
+extern n_user;
+int roundcnt=1;
 
 int main(int argc, char *argv[]) {
 	
@@ -29,54 +33,85 @@ int main(int argc, char *argv[]) {
 	printf("######BLACKJAK######\n");
 	printf("####################\n\n");
 	
-	printf("input the number of players (MAX:5) : ");
-
-	scanf("%d",&n_user);
-	
-	
 	srand((unsigned)time(NULL));
 	
 	//set the number of players
 	configUser();
 
-
+	
 	//Game initialization --------
 	//1. players' dollar
 	
 	//2. card tray
 	mixCardTray();
-	
-	offerCards();
-	
-	printCardInitialStatus();
-
 
 	//Game start --------
-	/*do {
-		
+	do {
+		int i;
+		 
 		betDollar();
 		offerCards(); //1. give cards to all the players
 		
 		printCardInitialStatus();
 		printf("\n------------------ GAME start --------------------------\n");
 		
+		
+		//my turn
+		printf(">>> my turn! -------------\n");
+		
+		int input;
+		
+		while(input==0 && cardSum[0]<21)
+		{	
+			printUserCardStatus(0,Cardcnt[0]);
+			printf("Action? (0 - go, others - stay) :");
+			input = getIntegerInput();
+			
+			
+			cardhold[0][Cardcnt[0]] = pullCard();
+			calcStepResult(0,Cardcnt[0]);
+			printf("%d",cardSum[0]);
+			Cardcnt[0]++;		
+		}
+		
+		
 		//each player's turn
-		for () //each player
-		{
+		for (i=1;i<n_user;i++) //each player
+		{	
+			
+			printf(">>> player %d turn! -------\n",i);
 			while () //do until the player dies or player says stop
 			{
-				//print current card status printUserCardStatus();
-				//check the card status ::: calcStepResult()
-				//GO? STOP? ::: getAction()
+				printUserCardStatus(i,cardcnt);//print current card status
+				calcStepResult(int user,int cardcnt);//check the card status :::
+				getAction();//GO? STOP? :::
+				cardhold[0][cardcnt] = pullCard(); 
 				//check if the turn ends or not
 			}
 		}
 		
+		//server's turn
+		printf(">>> server turn! ----------\n")
+		while()//cardsum<17 
+		{	
+			
+			printUserCardStatus(i,cardcnt[n_user]);
+			calcStepResult();
+			getAction();
+			if(getAction==1)
+			{
+			cardhold[n_user][cardcnt] = pullCard();	
+			}
+			
+		}
+		
 		//result
 		checkResult();
+		roundcnt++;
+		
 	} while (gameEnd == 0);
 	
-	checkWinner();*/
+	checkWinner();
 	
 	
 	return 0;
