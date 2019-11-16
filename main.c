@@ -16,12 +16,14 @@
 #define N_MIN_ENDCARD		30
 
 
-extern gameEnd = 0;
-int Cardcnt[N_MAX_USER]={2,2,2,2,2};
+extern gameEnd;
+int Cardcnt[N_MAX_USER];
 extern cardSum[N_MAX_USER];
 extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];
 extern n_user;
 int roundcnt=1;
+extern bet[N_MAX_USER];
+extern dollar[N_MAX_USER];
 
 int main(int argc, char *argv[]) {
 	
@@ -44,11 +46,25 @@ int main(int argc, char *argv[]) {
 	
 	//2. card tray
 	mixCardTray();
+	
+	
+	
+	for(i=0;i<n_user;i++)
+	{
+		dollar[i]=N_DOLLAR;
+	}
+	
 
 	//Game start --------
 	do {
 		int i;
+		int j;
 		 
+		for(i=0;i<n_user;i++)
+		{
+			Cardcnt[i]=2;
+		} 
+		
 		betDollar();
 		offerCards(); //1. give cards to all the players
 		
@@ -59,54 +75,108 @@ int main(int argc, char *argv[]) {
 		//my turn
 		printf(">>> my turn! -------------\n");
 		
-		int input;
-		
-		while(input==0 && cardSum[0]<21)
+		while(cardSum[0]<=21)
 		{	
 			printUserCardStatus(0,Cardcnt[0]);
-			printf("Action? (0 - go, others - stay) :");
-			input = getIntegerInput();
 			
-			
-			cardhold[0][Cardcnt[0]] = pullCard();
+			getAction();
 			calcStepResult(0,Cardcnt[0]);
-			printf("%d",cardSum[0]);
-			Cardcnt[0]++;		
+						
 		}
+		printf("DEAD (sum:%d) --> -$%d ($%d)",cardSum[0],bet[0],dollar[0]);
 		
-		
+		printf("\n");
 		//each player's turn
 		for (i=1;i<n_user;i++) //each player
 		{	
 			
 			printf(">>> player %d turn! -------\n",i);
-			while () //do until the player dies or player says stop
+			while (cardSum[i]<=21)
 			{
-				printUserCardStatus(i,cardcnt);//print current card status
-				calcStepResult(int user,int cardcnt);//check the card status :::
-				getAction();//GO? STOP? :::
-				cardhold[0][cardcnt] = pullCard(); 
-				//check if the turn ends or not
+				printUserCardStatus(i,Cardcnt[i]);
+				calcStepResult(i,Cardcnt[i]);
+				
+				if(Cardcnt[n_user]==1 && cardSum[n_user]==21)
+				{
+					printf("Blackjak!");
+				}
+				else if(cardSum[i]<17)
+				{
+					printf("Go!\n");
+					cardhold[i][Cardcnt[i]] = pullCard();
+					Cardcnt[i]++;
+					printf("%d\n",cardSum[i]);
+				}
+				else if(cardSum[i]>21)
+				{
+					dollar[i]=dollar[i]-bet[i];
+					printf(" DEAD (sum:%d) --> -$%d ($%d)",cardSum[i],bet[i],dollar[i]);
+				}
+				
+				else if(cardSum[i]>=17) 
+				{
+					printf("Stay!\n");
+					printf("%d\n",cardSum[i]);
+					break;
+				}
+					
 			}
+			
 		}
 		
 		//server's turn
-		printf(">>> server turn! ----------\n")
-		while()//cardsum<17 
-		{	
-			
-			printUserCardStatus(i,cardcnt[n_user]);
-			calcStepResult();
-			getAction();
-			if(getAction==1)
+		printf(">>> server turn! ----------\n");
+		while (cardSum[n_user]<=21)
 			{
-			cardhold[n_user][cardcnt] = pullCard();	
+				printUserCardStatus(n_user,Cardcnt[n_user]);
+				calcStepResult(n_user,Cardcnt[n_user]);
+				
+				if(Cardcnt[n_user]==1 && cardSum[n_user]==21)
+				{
+					printf("Blackjak!");
+				}
+				else if(getcardNum()==11 && cardSum[i]>21)
+				{
+					cardSum[i]=cardSum[i]-10;
+					
+					if(cardSum[i]>21)
+						printf(" DEAD (sum:%d)",cardSum[n_user]);
+				}
+				else if(cardSum[n_user]<17)
+				{
+					printf("Go!\n");
+					cardhold[n_user][Cardcnt[n_user]] = pullCard();
+					Cardcnt[n_user]++;
+					printf("%d\n",cardSum[n_user]);
+				}
+				else if(cardSum[n_user]>21)
+				{
+					printf(" DEAD (sum:%d)",cardSum[n_user]);
+				}
+				else if(cardSum[i]<=17) 
+				{
+					printf("Stay!\n");
+					printf("%d\n",cardSum[i]);
+					break;
+				}
+				
+					
 			}
-			
-		}
 		
 		//result
 		checkResult();
+		
+		for(i=0;i<n_user+1;i++)
+		{
+			for(j=0;j<N_MAX_CARDHOLD;j++)
+				cardhold[i][j]=N_CARD*N_CARDSET;
+		}
+		
+		for(i=0;i<n_user;i++)
+		{
+			cardSum[i]=0;
+		}
+		
 		roundcnt++;
 		
 	} while (gameEnd == 0);

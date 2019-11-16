@@ -15,6 +15,8 @@
 
 #define N_MIN_ENDCARD		30
 
+extern roundcnt;
+
 int cardorder=0;
 int Cardcnt[N_MAX_USER];
 
@@ -77,7 +79,7 @@ int getCardNum(int cardnum) {
 	
 	
 	if(cardnum%13==1)
-		return 1; 
+		return 11; 
 	else if(cardnum%13==2)
 		return 2;	
 	else if(cardnum%13==3)
@@ -100,8 +102,14 @@ int getCardNum(int cardnum) {
 		return 10;
 	else if(cardnum%13==12)
 		return 10;
-	else 
-		return 10;
+	else if(cardnum%13==0)
+		{
+			if(cardnum==N_CARDSET*N_CARD)
+				return 0;
+			else
+			    return 10;
+		}
+		
 		
 	
 }
@@ -207,11 +215,6 @@ int betDollar(void) {
 	
 	int i;
 	
-	for(i=0;i<n_user;i++)
-	{
-		dollar[i]=N_DOLLAR;
-	}
-	
 	printf("\n-------batting step-------\n");
 	
 	printf("-> your betting (total:$%d) : ",dollar[0]);
@@ -278,7 +281,16 @@ void printCardInitialStatus(void) {
 
 int getAction(void) {
 	
+	int input;
 	
+	printf("Action? (0 - go, others - stay) :");
+	input = getIntegerInput();
+	
+	if(input==0)
+		{
+			cardhold[0][Cardcnt[0]] = pullCard();
+			Cardcnt[0]++;
+		}
 }
 
 
@@ -315,27 +327,27 @@ int calcStepResult(int user,int cardcnt) {
 }
 
 int checkResult() {
-	printf("-------------------- ROUND %d result ....",roundcnt);
+	printf("-------------------- ROUND %d result ....\n",roundcnt);
 	//my result 
 	printf("  -> your result : ");
-	if(cardSum[n_user]==21)
+		if(cardhold[n_user][0]+cardhold[n_user][1]==11)
 			{
-			printf("lose!")
+			printf("lose!\n");
 			dollar[0]=dollar[0]-bet[0];
-			printf("(sum:%d) --> $%d",cardSum[0],dollar[0]);	
+			printf("(sum:%d) --> $%d\n",cardSum[0],dollar[0]);	
 			} 
 		if(cardSum[0]<21&&cardSum[n_user]<21)
 			if(cardSum[0]>cardSum[n_user]) 
 				{ 
-				printf("win!");
+				printf("win!\n");
 				dollar[0]=dollar[0]+bet[0];
-				printf("(sum:%d) --> $%d",cardSum[0],dollar[0]);
+				printf("(sum:%d) --> $%d\n",cardSum[0],dollar[0]);
 				}	
 		if(cardSum[0]>21)
 		{
-			printf("lose due to overflow!");
+			printf("lose due to overflow!\n");
 			dollar[0]=dollar[0]-bet[0];
-			printf("(sum:%d)",dollar[0]);
+			printf("(sum:%d)\n",cardSum[0]);
 		}
 	//players result
 	int i;
@@ -343,24 +355,23 @@ int checkResult() {
 	{
 		printf("  -> %d'th player's result :",i);
 		
-		if(cardSum[n_user]==21)
+		if(cardhold[n_user][0]+cardhold[n_user][1]==11)
 			{
-			printf("lose! (server)")
+			printf("lose! (server)\n");
 			dollar[i]=dollar[i]-bet[i];
-			printf("(sum:%d) --> $%d",cardSum[i],dollar[i]);	
+			printf("(sum:%d) --> $%d\n",cardSum[i],dollar[i]);	
 			} 
 		if(cardSum[i]<21&&cardSum[n_user]<21)
 			if(cardSum[i]>cardSum[n_user]) 
 				{ 
-				printf("win!");
+				printf("win!\n");
 				dollar[i]=dollar[i]+bet[i];
-				printf("(sum:%d) --> $%d",cardSum[i],dollar[i]);
+				printf("(sum:%d) --> $%d\n",cardSum[i],dollar[i]);
 				}	
 		if(cardSum[i]>21)
 		{
-			printf("lose due to overflow!");
-			dollar[i]=dollar[i]-bet[i];
-			printf("(sum:%d)",dollar[i]);
+			printf("lose due to overflow!\n");
+			printf("(sum:%d)\n",cardSum[i]);
 		}
 	}	
 	
