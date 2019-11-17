@@ -25,6 +25,8 @@ int roundcnt=1;
 extern bet[N_MAX_USER];
 extern dollar[N_MAX_USER];
 extern blackjak[N_MAX_USER];
+extern cardIndex;
+extern cardorder;
 
 int main(int argc, char *argv[]) {
 	
@@ -60,6 +62,11 @@ int main(int argc, char *argv[]) {
 	do {
 		int i;
 		int j;
+		
+		printf("\n------------------------------------------------\n");
+		printf("------------ ROUND %d (cardIndex:%d)--------------\n",roundcnt,cardIndex);
+		printf("------------------------------------------------\n");
+		
 		 
 		for(i=0;i<n_user;i++)
 		{
@@ -76,15 +83,19 @@ int main(int argc, char *argv[]) {
 		//my turn
 		printf(">>> my turn! -------------\n");
 		
-		while(1)
+		do 
 		{	
+			
 			printUserCardStatus(0,Cardcnt[0]);
+			printf("Action? (0 - go, others - stay) :");
 			
 			if(getAction()==0)
 			{	
+			
 				calcStepResult(0,Cardcnt[0]);
 					if(cardSum[0]>21)
 				{
+					printUserCardStatus(0,Cardcnt[0]);
 					dollar[0]=dollar[0]-bet[0];
 					printf(" DEAD (sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);
 					break;
@@ -93,17 +104,16 @@ int main(int argc, char *argv[]) {
 			else if(getAction()==1)//something wrong 
 			{	
 				
-				if(Cardcnt[n_user]==1 && cardSum[n_user]==21)
+				if(Cardcnt[0]==2 && cardSum[0]==21)
 				{
 					printf("Blackjak!");
 					blackjak[0]=1;
+					break;
 				}
-				printf("why why");
-				calcStepResult(0,Cardcnt[0]);
 				break;
 			}
 						
-		}
+		}while(1);
 	
 		
 		printf("\n");
@@ -117,7 +127,7 @@ int main(int argc, char *argv[]) {
 				printUserCardStatus(i,Cardcnt[i]);
 				calcStepResult(i,Cardcnt[i]);
 				
-				if(Cardcnt[n_user]==1 && cardSum[n_user]==21)
+				if(Cardcnt[n_user]==2 && cardSum[n_user]==21)
 				{
 					printf("Blackjak!");
 					blackjak[i]=1;
@@ -163,13 +173,8 @@ int main(int argc, char *argv[]) {
 				printUserCardStatus(n_user,Cardcnt[n_user]);
 				calcStepResult(n_user,Cardcnt[n_user]);
 				
-				if(Cardcnt[n_user]==1 && cardSum[n_user]==21)
-				{
-					printf("Blackjak!");
-					blackjak[n_user]=1;
-					break; 
-				}
-				else if(getCardNum()==11 && cardSum[i]>21)
+				
+				if(getCardNum()==11 && cardSum[i]>21)
 				{
 					cardSum[i]=cardSum[i]-10;
 					
@@ -213,7 +218,14 @@ int main(int argc, char *argv[]) {
 			cardSum[i]=0;
 		}
 		
+		for(i=0;i<n_user;i++)
+		{
+			blackjak[i]=0;
+		}
+		
 		roundcnt++;
+		cardIndex=(N_CARDSET*N_CARD)-cardorder;
+		
 		
 	} while (gameEnd == 0);
 	
