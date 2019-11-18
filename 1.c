@@ -104,12 +104,8 @@ int getCardNum(int cardnum) {
 	else if(cardnum%13==12)
 		return 10;
 	else if(cardnum%13==0)
-		{
-			if(cardnum==N_CARDSET*N_CARD)
-				return 0;
-			else
-			    return 10;
-		}
+		return 10;
+		
 		
 		
 	
@@ -235,7 +231,7 @@ int betDollar(void) {
 }
 
 
-//offering initial 2 cards / 한 사람당 한 장씩 두 번 나눠주는 걸로 바꿔 
+//offering initial 2 cards /  
 void offerCards(void) {
 	int i;
 	//1. give two card for each players
@@ -284,21 +280,17 @@ int getAction(void) {
 	
 	int input;
 	
-	input = getIntegerInput();
+		input = getIntegerInput();
 	
 	if(input==0)
 		{
 			
 			cardhold[0][Cardcnt[0]] = pullCard();
 			Cardcnt[0]++;
-			
-			
-			
 			return 0;
 		}		
-	else
+	else if(input!=0)
 		{
-			calcStepResult(0,Cardcnt[0]);
 			return 1;	
 		}
 }
@@ -333,7 +325,7 @@ int calcStepResult(int user,int cardcnt) {
 }
 
 int checkResult() {
-	printf("-------------------- ROUND %d result ....\n",roundcnt);
+	printf("---------------- ROUND %d result ----------------\n",roundcnt);
 	//my result 
 	printf("  -> your result : ");
 		 
