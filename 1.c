@@ -211,13 +211,21 @@ int configUser(void) {
 int betDollar(void) {
 	
 	int i;
+	do
+	{
+		if(bet[0]>dollar[0])
+		{
+			printf("You're short of money :(");
+		}
+		
+		printf("\n-------batting step-------\n");
 	
-	printf("\n-------batting step-------\n");
+		printf("-> your betting (total:$%d) : ",dollar[0]);
 	
-	printf("-> your betting (total:$%d) : ",dollar[0]);
+		scanf("%d",&bet[0]);
 	
-	scanf("%d",&bet[0]);
-	
+	}while(bet[0]>dollar[0]);	
+		
 	srand((unsigned int)time(NULL));
 	
 
@@ -225,7 +233,8 @@ int betDollar(void) {
 	{
 		bet[i] = rand()% N_MAX_BET+1;
 		printf("-> player%d bets $%d (out of $%d)\n",i,bet[i],dollar[i]);
-	}
+	}	
+
 
 
 }
