@@ -28,6 +28,7 @@ extern blackjak[N_MAX_USER];
 extern cardIndex;
 extern cardorder;
 int Return;
+int multiEachdollar=1;
 
 
 int main(int argc, char *argv[]) {
@@ -78,6 +79,12 @@ int main(int argc, char *argv[]) {
 		betDollar();
 		offerCards(); //1. give cards to all the players
 		
+		if(gameEnd==1)
+		{
+			printf("\ncard ran out the tray! finishing the game :(\n");
+			break;
+		}
+		
 		printCardInitialStatus();
 		printf("\n------------------ GAME start ------------------\n");
 		
@@ -95,7 +102,13 @@ int main(int argc, char *argv[]) {
 			
 			if(Return==0)
 			{	
-			
+				cardhold[0][Cardcnt[0]] = pullCard();
+				if(gameEnd==1)
+				{
+					break;
+				}
+				
+				Cardcnt[0]++;
 				calcStepResult(0,Cardcnt[0]);
 				if(cardSum[0]>21)
 				{
@@ -115,6 +128,16 @@ int main(int argc, char *argv[]) {
 						printf(" DEAD (sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);
 						break;
 					}
+					else if(cardSum[0]<17)
+					{
+					printf("Go!\n");
+					cardhold[0][Cardcnt[0]] = pullCard();
+					if(gameEnd==1)
+					{
+						break;
+					}
+					Cardcnt[0]++;
+					}	
 				}	
 			}
 			else if(Return==1) 
@@ -154,6 +177,10 @@ int main(int argc, char *argv[]) {
 				{
 					printf("Go!\n");
 					cardhold[i][Cardcnt[i]] = pullCard();
+					if(gameEnd==1)
+					{
+						break;
+					}
 					Cardcnt[i]++;
 					
 				}
@@ -168,14 +195,16 @@ int main(int argc, char *argv[]) {
 						printf(" DEAD (sum:%d) --> -$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
 						break;
 					}
-				}	
-				else if(getCardNum()==11 && cardSum[i]>21)
-				{
-					cardSum[i]=cardSum[i]-10;
-					
-					if(cardSum[i]>21)
-						printf(" DEAD (sum:%d)",cardSum[n_user]);
+					else if(cardSum[n_user]<17)
+					{
+					printf("Go!\n");
+					cardhold[i][Cardcnt[i]] = pullCard();
+					if(gameEnd==1)
+					{
 						break;
+					}
+					Cardcnt[i]++;
+					}	
 				}
 				else if(cardSum[i]>21)
 				{
@@ -188,12 +217,6 @@ int main(int argc, char *argv[]) {
 				{
 					printf("Stay!\n");
 					
-					break;
-				}
-				else if(Cardcnt[i]==2 && cardSum[i]==21)
-				{
-					printf("Blackjak!");
-					blackjak[i]=1;
 					break;
 				}
 					
@@ -209,25 +232,20 @@ int main(int argc, char *argv[]) {
 				calcStepResult(n_user,Cardcnt[n_user]);
 				
 				
-				if(getCardNum()==11 && cardSum[i]>21)
-				{
-					cardSum[i]=cardSum[i]-10;
-					
-					if(cardSum[i]>21)
-						printf(" DEAD (sum:%d)\n",cardSum[n_user]);
-						printf("[[[[[[[ server result is overflow! ]]]]]]]\n\n");
-						break;
-				}
-				else if(cardSum[n_user]<17)
+				if(cardSum[n_user]<17)
 				{
 					printf("Go!\n");
 					cardhold[n_user][Cardcnt[n_user]] = pullCard();
+					if(gameEnd==1)
+					{
+						break;
+					}
 					Cardcnt[n_user]++;
 					
 				}
 				else if(cardSum[n_user]>21 && getCardNum()==11)
 				{
-					cardSum[n_user]=cardSum[0]-10;
+					cardSum[n_user]=cardSum[n_user]-10;
 					
 					if(cardSum[n_user]>21)
 					{
@@ -236,6 +254,16 @@ int main(int argc, char *argv[]) {
 						printf(" DEAD (sum:%d) --> -$%d ($%d)\n",cardSum[n_user],bet[n_user],dollar[n_user]);
 						break;
 					}
+					else if(cardSum[n_user]<17)
+					{
+					printf("Go!\n");
+					cardhold[n_user][Cardcnt[n_user]] = pullCard();
+					if(gameEnd==1)
+					{
+						break;
+					}
+					Cardcnt[n_user]++;
+					}	
 				}	
 				else if(cardSum[n_user]>21)
 				{
@@ -257,13 +285,37 @@ int main(int argc, char *argv[]) {
 					break;
 				}
 				
+				
 					
 			}
 		//End game
 		
+		for(i=0;i<n_user;i++)
+		{
+			multiEachdollar=multiEachdollar*dollar[i]; 
+		}
 		
+		if(multiEachdollar==0)
+		{
+			
+			gameEnd = 1;
+		}
+		
+		if(multiEachdollar==0 && gameEnd ==1)
+		{
+			printf("someone went bankrupt!\n");
+		}
+		
+		if(gameEnd==1)
+		{
+			printf("\ncard ran out the tray! finishing the game :(\n");
+			break;
+		}
+		
+	
 		
 		//result
+		
 		checkResult();
 		
 		for(i=0;i<n_user+1;i++)

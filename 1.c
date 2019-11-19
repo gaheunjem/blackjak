@@ -17,6 +17,8 @@
 
 extern roundcnt;
 int blackjak[N_MAX_USER];
+int winner[N_MAX_USER];
+int win;
 
 int cardorder=0;
 int Cardcnt[N_MAX_USER];
@@ -175,13 +177,7 @@ int mixCardTray(void) {
     }
 
     rndCard(CardTray,N_CARDSET*N_CARD);        
-
-//    for(i=0;i<N_CARDSET*N_CARD;i++)             
-//
-//    {
-//        printf("%d ",CardTray[i]);
-//    }
-
+    
     printf("\n");
    
 	printf("--> card is mixed and put into the tray\n");
@@ -191,8 +187,12 @@ int mixCardTray(void) {
 int pullCard(void) {
 	
    	cardorder++;	
-	
+	if(cardorder>=N_CARDSET*N_CARD-1)
+		{
+			gameEnd=1;
+		}
 	return CardTray[cardorder-1];
+	
 }
 
 
@@ -233,19 +233,21 @@ int betDollar(void) {
 
 //offering initial 2 cards /  
 void offerCards(void) {
-	int i;
-	//1. give two card for each players
-	for (i=0;i<n_user;i++)
+	int i,j;
+	//1. give two card for each players and server
+	for(i=0;i<=1;i++)
 	{
-		cardhold[i][0] = pullCard();
-		cardhold[i][1] = pullCard();
-	}
-	//2. give two card for the operator
-	cardhold[n_user][0] = pullCard();
-	cardhold[n_user][1] = pullCard();
+		for(j=0;j<n_user;j++)
+			{
+				cardhold[j][i]=pullCard();
+			}
+		cardhold[n_user][i]=pullCard();
+	}	
 	
 	return;
 }
+
+
 
 //print initial card status
 void printCardInitialStatus(void) {
@@ -284,9 +286,6 @@ int getAction(void) {
 	
 	if(input==0)
 		{
-			
-			cardhold[0][Cardcnt[0]] = pullCard();
-			Cardcnt[0]++;
 			return 0;
 		}		
 	else if(input!=0)
@@ -325,7 +324,7 @@ int calcStepResult(int user,int cardcnt) {
 }
 
 int checkResult() {
-	printf("---------------- ROUND %d result ----------------\n",roundcnt);
+	printf("\n---------------- ROUND %d result ----------------\n",roundcnt);
 	//my result 
 	printf("  -> your result : ");
 		 
@@ -342,7 +341,22 @@ int checkResult() {
 				printf("lose!\n");
 				dollar[0]=dollar[0]-bet[0];
 				printf("(sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);	
-			}	
+			}
+			else if(blackjak[n_user]==1)
+			{	
+				if(blackjak[0]!=1)
+				{
+					printf("lose!\n");
+					dollar[0]=dollar[0]-bet[0];
+					printf("(sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);	
+				}
+				else if(blackjak[0]==1)
+				{
+					printf("win!\n");
+					dollar[0]=dollar[0]+bet[0];
+					printf("(sum:%d) --> +$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);
+				}
+			}
 		}	
 		else if(cardSum[0]>21)
 		{
@@ -368,17 +382,33 @@ int checkResult() {
 		if(cardSum[i]<=21&&cardSum[n_user]<=21)
 		{
 			if(cardSum[i]>=cardSum[n_user]) 
-				{ 
+			{ 
 				printf("win!\n");
 				dollar[i]=dollar[i]+bet[i];
 				printf("(sum:%d) --> +$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
-				}
+			}
 			else if(cardSum[i]<cardSum[n_user])
-				{
+			{
 				printf("lose!\n");
 				dollar[i]=dollar[i]-bet[i];
 				printf("(sum:%d) --> -$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
-				}	
+			}
+			else if(blackjak[n_user]==1)
+			{	
+				if(blackjak[i]!=1)
+				{
+					printf("lose!\n");
+					dollar[i]=dollar[i]-bet[i];
+					printf("(sum:%d) --> -$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);	
+				}
+				else if(blackjak[i]==1)
+				{
+					printf("win!\n");
+					dollar[i]=dollar[i]+bet[i];
+					printf("(sum:%d) --> +$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
+				}
+			}
+			
 		}	
 		else if(cardSum[n_user]>21)
 		{
@@ -405,11 +435,64 @@ int checkResult() {
 		
 	
 	}	
-	
-	
+
 }
 
 int checkWinner() {
+	
+	printf("\n\n----------------------------------------------\n\n");
+	printf("----------------------------------------------\n\n");
+	printf("----------------------------------------------\n\n");
+	printf("----------------------------------------------\n\n");
+	
+	printf("game end! your money :$%d, players's money :",dollar[0]);
+	
+	int i;
+	int j;
+	
+	for(i=1;i<n_user;i++)
+	{
+		printf("$%d ",dollar[i]);
+	}
+	
+
+	for(i=0;i<n_user;i++)
+	{
+		winner[i]=1;
+	}
+	
+	for(i=0;i<n_user;i++)
+	{
+		for(j=i+1;j<n_user;j++)
+		{
+			if(dollar[i]>dollar[j])
+			{
+				winner[j]++;	
+			}
+			else if(dollar[i]<dollar[j])
+			{
+				winner[i]++;	
+			}	
+		}	
+	}	
+	
+	for(i=0;i<n_user;i++)
+	{
+		win=i;
+		
+		if(winner[i]==1)
+			break;
+	}
+	
+	if(win==0)
+	{
+		printf("\nYou win!\n");
+	}	
+	else
+	{
+		printf("\nplayer %d's win!\n",win);
+			
+	}
 	
 }
 
