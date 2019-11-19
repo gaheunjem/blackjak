@@ -380,8 +380,13 @@ int checkResult() {
 				dollar[0]=dollar[0]+bet[0];
 				printf("(sum:%d) --> +$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);
 			}
-				
-		}
+			else if(cardSum[0]>21)
+			{
+				printf("lose due to overflow!\n");	
+				printf("(sum:%d)\n",cardSum[0]);
+			}
+			
+		}	
 	//players result
 	int i;
 	for(i=1;i<n_user;i++)
@@ -417,8 +422,7 @@ int checkResult() {
 					printf("(sum:%d) --> +$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
 				}
 			}
-			
-		}	
+		}
 		else if(cardSum[n_user]>21)
 		{
 			if(cardSum[i]<=21)
@@ -429,9 +433,8 @@ int checkResult() {
 			}
 			else if(cardSum[i]>21)
 			{
-				printf("lose!\n");
-				dollar[i]=dollar[i]-bet[i];
-				printf("(sum:%d) --> -$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
+				printf("lose due to overflow!\n");	
+				printf("(sum:%d)\n",cardSum[i]);
 			}
 			
 		}

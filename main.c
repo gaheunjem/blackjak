@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
 					printf(" DEAD (sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);
 					break;
 				}
-				else if(cardSum[0]>21 && getCardNum()==11)
+				/*else if(cardSum[0]>21 && getCardNum()==11)
 				{
 					cardSum[0]=cardSum[0]-10;
 					
@@ -138,7 +138,8 @@ int main(int argc, char *argv[]) {
 					}
 					Cardcnt[0]++;
 					}	
-				}	
+				}*/
+			
 			}
 			else if(Return==1) 
 			{	
@@ -184,7 +185,7 @@ int main(int argc, char *argv[]) {
 					Cardcnt[i]++;
 					
 				}
-				else if(cardSum[i]>21 && getCardNum()==11)
+				/*else if(cardSum[i]>21 && getCardNum()==11)
 				{
 					cardSum[i]=cardSum[i]-10;
 					
@@ -205,7 +206,7 @@ int main(int argc, char *argv[]) {
 					}
 					Cardcnt[i]++;
 					}	
-				}
+				}*/
 				else if(cardSum[i]>21)
 				{
 					dollar[i]=dollar[i]-bet[i];
@@ -231,8 +232,13 @@ int main(int argc, char *argv[]) {
 				printUserCardStatus(n_user,Cardcnt[n_user]);
 				calcStepResult(n_user,Cardcnt[n_user]);
 				
-				
-				if(cardSum[n_user]<17)
+				if(Cardcnt[n_user]==2 && cardSum[n_user]==21)
+				{
+					printf("[[[[[[[ server result is blackjak! ]]]]]]]\n\n");
+					blackjak[n_user]=1;
+					break;
+				}
+				else if(cardSum[n_user]<17)
 				{
 					printf("Go!\n");
 					cardhold[n_user][Cardcnt[n_user]] = pullCard();
@@ -243,7 +249,7 @@ int main(int argc, char *argv[]) {
 					Cardcnt[n_user]++;
 					
 				}
-				else if(cardSum[n_user]>21 && getCardNum()==11)
+				/*else if(cardSum[n_user]>21 && getCardNum()==11)
 				{
 					cardSum[n_user]=cardSum[n_user]-10;
 					
@@ -264,7 +270,7 @@ int main(int argc, char *argv[]) {
 					}
 					Cardcnt[n_user]++;
 					}	
-				}	
+				}*/	
 				else if(cardSum[n_user]>21)
 				{
 					printf(" DEAD (sum:%d)\n",cardSum[n_user]);
@@ -276,12 +282,6 @@ int main(int argc, char *argv[]) {
 					printf("Stay!\n");
 					
 					printf("[[[[[[[ server result is %d! ]]]]]]]\n\n",cardSum[i]);
-					break;
-				}
-				else if(Cardcnt[n_user]==2 && cardSum[n_user]==21)
-				{
-					printf("Blackjak!");
-					blackjak[n_user]=1;
 					break;
 				}
 				
