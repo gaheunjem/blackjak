@@ -6,7 +6,6 @@
 #define N_CARD				52
 #define N_DOLLAR			50
 
-
 #define N_MAX_CARDNUM		13
 #define N_MAX_USER			5
 #define N_MAX_CARDHOLD		10

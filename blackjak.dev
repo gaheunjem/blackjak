@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=2
+UnitCount=4
 
 [VersionInfo]
 Major=1
@@ -51,7 +51,37 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=main.c
+FileName=PlayGame.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit3]
+FileName=MiddleofGame.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=AfterGame.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=AfterGame.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -61,7 +91,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=1.c
+FileName=GamePreparation.c
 CompileCpp=0
 Folder=
 Compile=1
