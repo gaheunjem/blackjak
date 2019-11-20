@@ -317,19 +317,59 @@ void printUserCardStatus(int user, int cardcnt) {
 	printf("\t ::: ");
 }
 
-//*A 1or11 생각
+
 // calculate the card sum and see if : 1. under 21, 2. over 21, 3. blackjack
 int calcStepResult(int user,int cardcnt) {	
 	
 	int i;
 	int sum=0;
+	int NumA=0;
 	
 	for(i=0;i<cardcnt;i++)
 	{
-	sum+=getCardNum(cardhold[user][i]);//카드 수만큼 실제 숫자 더하기	
-	}	
+		if(getCardNum(cardhold[user][i])!=11)
+		{
+			sum+=getCardNum(cardhold[user][i]);
+		}
+		else if(getCardNum(cardhold[user][i])==11)
+		{
+			NumA++;
+		}
+	}
+	
+	if(cardSum[user]==10)
+	{
+		if(NumA==1)
+		{
+			sum=sum+11;
+		}
+		else if(NumA>1)
+		{
+			sum=sum+NumA;
+		}
+	}
+	else if(cardSum[user]>10)
+	{
+		if(NumA>0)
+		{
+			sum=sum+NumA;
+		}
+	}
+	else if(cardSum[user]<10)
+	{
+		if(NumA==1)
+		{
+			sum=sum+11;
+		}
+		else if(NumA>1)
+		{
+			sum=sum+11+(NumA-1);
+		}
+	}
 	
  	cardSum[user]=sum;
+ 	
+ 	return 0;
 }
 
 int checkResult() {
