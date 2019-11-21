@@ -13,7 +13,7 @@
 #define N_MAX_BET			5
 
 extern roundcnt;
-extern blackjak[N_MAX_USER];
+extern blackjack[N_MAX_USER];
 extern winner[N_MAX_USER];
 extern win;
 
@@ -196,7 +196,6 @@ int calcStepResult(int user,int cardcnt) {
 		sum+=getCardNum(cardhold[user][i]);
 		if (getCardNum(cardhold[user][i]) == 1)
 			NumA++;
-		
 		
 	}
 	if (NumA > 0  && sum <= 11)

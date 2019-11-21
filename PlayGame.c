@@ -14,7 +14,7 @@
 
 
 int roundcnt=1;								
-int blackjak[N_MAX_USER];					//Blackjak status
+int blackjack[N_MAX_USER];					//blackjack status
 int winner[N_MAX_USER];						//money ranking
 int win;
 
@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
 	int i;
 	
 	printf("####################\n");
-	printf("######BLACKJAK######\n");
+	printf("######blackjack######\n");
+	
 	printf("####################\n\n");
 	
 	srand((unsigned)time(NULL));
@@ -135,8 +136,8 @@ int main(int argc, char *argv[]) {
 				
 				if(Cardcnt[0]==2 && cardSum[0]==21)
 				{
-					printf("Blackjak!");
-					blackjak[0]=1;
+					printf("blackjack!");
+					blackjack[0]=1;
 					break;
 				}
 				break;
@@ -159,8 +160,8 @@ int main(int argc, char *argv[]) {
 				
 				if(Cardcnt[i]==2 && cardSum[i]==21)
 				{
-					printf("Blackjak!\n");
-					blackjak[i]=1;
+					printf("blackjack!\n");
+					blackjack[i]=1;
 					break;
 				}
 				else if(cardSum[i]<N_MAX_GO)
@@ -203,8 +204,8 @@ int main(int argc, char *argv[]) {
 				
 				if(Cardcnt[n_user]==2 && cardSum[n_user]==21)
 				{
-					printf("\n[[[[[[[ server result is blackjak! ]]]]]]]\n\n");
-					blackjak[n_user]=1;
+					printf("\n[[[[[[[ server result is blackjack! ]]]]]]]\n\n");
+					blackjack[n_user]=1;
 					break;
 				}
 				else if(cardSum[n_user]<N_MAX_GO)
@@ -235,23 +236,7 @@ int main(int argc, char *argv[]) {
 				
 					
 			}
-		//End game
-		
-		for(i=0;i<n_user;i++) // multiply each player's dollar[]
-		{
-			multiEachdollar=multiEachdollar*dollar[i]; 
-		}
-		
-		if(multiEachdollar==0)//one of player's dollar ==0
-		{
-			
-			gameEnd = 1;
-		}
-		
-		if(multiEachdollar==0 && gameEnd ==1)
-		{
-			printf("someone went bankrupt!\n");
-		}
+		//End game when card ran out the tray!
 		
 		if(gameEnd==1)
 		{
@@ -276,9 +261,27 @@ int main(int argc, char *argv[]) {
 			cardSum[i]=0;
 		}
 		
-		for(i=0;i<n_user+1;i++) // initialization of blackjak status
+		for(i=0;i<n_user+1;i++) // initialization of blackjack status
 		{
-			blackjak[i]=0;
+			blackjack
+			[i]=0;
+		}
+		
+		//Endgame when ones go bankrupt
+		for(i=0;i<n_user;i++) // multiply each player's dollar[]
+		{
+			multiEachdollar=multiEachdollar*dollar[i]; 
+		}
+		
+		if(multiEachdollar==0)//one of player's dollar ==0
+		{
+			
+			gameEnd = 1;
+		}
+		
+		if(multiEachdollar==0 && gameEnd ==1)
+		{
+			printf("\nSomeone went bankrupt!\n");
 		}
 		
 		roundcnt++;

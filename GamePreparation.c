@@ -13,7 +13,7 @@
 #define N_MAX_BET			5
 
 extern roundcnt;
-extern blackjak[N_MAX_USER];
+extern blackjack[N_MAX_USER];
 extern winner[N_MAX_USER];
 extern win;
 

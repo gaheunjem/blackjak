@@ -13,7 +13,7 @@
 #define N_MAX_BET			5
 
 extern roundcnt;
-extern blackjak[N_MAX_USER];
+extern blackjack[N_MAX_USER];
 extern winner[N_MAX_USER];
 extern win;
 
@@ -51,15 +51,15 @@ int checkResult() {
 				dollar[0]=dollar[0]-bet[0];
 				printf("(sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);	
 			}
-			else if(blackjak[n_user]==1)
+			else if(blackjack[n_user]==1)
 			{	
-				if(blackjak[0]!=1)
+				if(blackjack[0]!=1)
 				{
 					printf("lose!\n");
 					dollar[0]=dollar[0]-bet[0];
 					printf("(sum:%d) --> -$%d ($%d)\n",cardSum[0],bet[0],dollar[0]);	
 				}
-				else if(blackjak[0]==1)
+				else if(blackjack[0]==1)
 				{
 					printf("win!\n");
 					dollar[0]=dollar[0]+bet[0];
@@ -107,15 +107,15 @@ int checkResult() {
 				dollar[i]=dollar[i]-bet[i];
 				printf("(sum:%d) --> -$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);
 			}
-			else if(blackjak[n_user]==1)
+			else if(blackjack[n_user]==1)
 			{	
-				if(blackjak[i]!=1)
+				if(blackjack[i]!=1)
 				{
 					printf("lose!\n");
 					dollar[i]=dollar[i]-bet[i];
 					printf("(sum:%d) --> -$%d ($%d)\n",cardSum[i],bet[i],dollar[i]);	
 				}
-				else if(blackjak[i]==1)
+				else if(blackjack[i]==1)
 				{
 					printf("win!\n");
 					dollar[i]=dollar[i]+bet[i];
