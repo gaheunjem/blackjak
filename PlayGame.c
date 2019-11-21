@@ -45,10 +45,9 @@ int main(int argc, char *argv[]) {
 	
 	int i;
 	
-	printf("####################\n");
-	printf("######blackjack######\n");
-	
-	printf("####################\n\n");
+	printf("######################\n");
+	printf("#######blackjack######\n");
+	printf("######################\n\n");
 	
 	srand((unsigned)time(NULL));
 	
