@@ -13,13 +13,13 @@
 #define N_MAX_BET			5
 
 
-int roundcnt=1;
-int blackjak[N_MAX_USER];//Blackjak status
-int winner[N_MAX_USER];//money ranking
+int roundcnt=1;								
+int blackjak[N_MAX_USER];					//Blackjak status
+int winner[N_MAX_USER];						//money ranking
 int win;
 
-int cardorder=0;
-int Cardcnt[N_MAX_USER];
+							
+int Cardcnt[N_MAX_USER];					//each player's Number of cards received in the game
 
 //card tray object
 int CardTray[N_CARDSET*N_CARD];
@@ -37,7 +37,7 @@ int cardSum[N_MAX_USER];					//sum of the cards
 int bet[N_MAX_USER];						//current betting 
 int gameEnd = 0; 							//game end flag
 
-int Return;// receive value of getCardNum()
+int Return;									// receive value of getCardNum()
 int multiEachdollar=1;
 
 
@@ -57,16 +57,12 @@ int main(int argc, char *argv[]) {
 	
 	//Game initialization --------
 	//1. players' dollar
-	
-	//2. card tray
-	mixCardTray();
-	
-	
-	
 	for(i=0;i<n_user;i++)
 	{
 		dollar[i]=N_DOLLAR;
 	}
+	//2. card tray
+	mixCardTray();
 	
 
 	//Game start --------
@@ -120,7 +116,7 @@ int main(int argc, char *argv[]) {
 				
 				Cardcnt[0]++;
 				calcStepResult(0,Cardcnt[0]);
-				printf("(%d) ",cardSum[0]);
+				
 				
 				if(cardSum[0]>21)
 				{
@@ -167,7 +163,7 @@ int main(int argc, char *argv[]) {
 					blackjak[i]=1;
 					break;
 				}
-				else if(cardSum[i]<17)
+				else if(cardSum[i]<N_MAX_GO)
 				{
 					printf("Go!\n");
 					cardhold[i][Cardcnt[i]] = pullCard();
@@ -211,7 +207,7 @@ int main(int argc, char *argv[]) {
 					blackjak[n_user]=1;
 					break;
 				}
-				else if(cardSum[n_user]<17)
+				else if(cardSum[n_user]<N_MAX_GO)
 				{
 					printf("Go!\n");
 					cardhold[n_user][Cardcnt[n_user]] = pullCard();
@@ -228,7 +224,7 @@ int main(int argc, char *argv[]) {
 					printf("[[[[[[[ server result is overflow! ]]]]]]]\n\n");
 					break;
 				}
-				else if(cardSum[n_user]>=17) 
+				else if(cardSum[n_user]>=N_MAX_GO) 
 				{
 					printf("Stay!\n");
 					
@@ -286,7 +282,7 @@ int main(int argc, char *argv[]) {
 		}
 		
 		roundcnt++;
-		cardIndex=cardorder;
+		
 		
 		
 	} while (gameEnd == 0);

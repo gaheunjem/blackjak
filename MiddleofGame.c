@@ -47,31 +47,31 @@ int getIntegerInput(void) {
 int getCardNum(int cardnum) {
 	
 	
-	if(cardnum%13==1)
+	if(cardnum%N_MAX_CARDNUM==1)
 		return 1; 
-	else if(cardnum%13==2)
+	else if(cardnum%N_MAX_CARDNUM==2)
 		return 2;	
-	else if(cardnum%13==3)
+	else if(cardnum%N_MAX_CARDNUM==3)
 		return 3;
-	else if(cardnum%13==4)
+	else if(cardnum%N_MAX_CARDNUM==4)
 		return 4;
-	else if(cardnum%13==5)
+	else if(cardnum%N_MAX_CARDNUM==5)
 		return 5;	
-	else if(cardnum%13==6)
+	else if(cardnum%N_MAX_CARDNUM==6)
 		return 6;
-	else if(cardnum%13==7)
+	else if(cardnum%N_MAX_CARDNUM==7)
 		return 7;
-	else if(cardnum%13==8)
+	else if(cardnum%N_MAX_CARDNUM==8)
 		return 8;
-	else if(cardnum%13==9)
+	else if(cardnum%N_MAX_CARDNUM==9)
 		return 9;
-	else if(cardnum%13==10)
+	else if(cardnum%N_MAX_CARDNUM==10)
 		return 10;	
-	else if(cardnum%13==11)
+	else if(cardnum%N_MAX_CARDNUM==11)
 		return 10;
-	else if(cardnum%13==12)
+	else if(cardnum%N_MAX_CARDNUM==12)
 		return 10;
-	else if(cardnum%13==0)
+	else if(cardnum%N_MAX_CARDNUM==0)
 		return 10;
 			
 }
@@ -79,7 +79,7 @@ int getCardNum(int cardnum) {
 //print the card information (e.g. DiaA)
 void printCard(int cardnum) {
 	
-	switch(cardnum/(N_CARDSET*13)){
+	switch(cardnum/(N_CARDSET*N_MAX_CARDNUM)){
 	
 	case 0:
 		printf("HRT");
@@ -95,29 +95,29 @@ void printCard(int cardnum) {
 		break;
 }
 	
-	if(cardnum%13==1)
+	if(cardnum%N_MAX_CARDNUM==1)
 		printf("Ace");
-	else if(cardnum%13==2)
+	else if(cardnum%N_MAX_CARDNUM==2)
 		printf("2");	
-	else if(cardnum%13==3)
+	else if(cardnum%N_MAX_CARDNUM==3)
 		printf("3");
-	else if(cardnum%13==4)
+	else if(cardnum%N_MAX_CARDNUM==4)
 		printf("4");
-	else if(cardnum%13==5)
+	else if(cardnum%N_MAX_CARDNUM==5)
 		printf("5");	
-	else if(cardnum%13==6)
+	else if(cardnum%N_MAX_CARDNUM==6)
 		printf("6");
-	else if(cardnum%13==7)
+	else if(cardnum%N_MAX_CARDNUM==7)
 		printf("7");
-	else if(cardnum%13==8)
+	else if(cardnum%N_MAX_CARDNUM==8)
 		printf("8");
-	else if(cardnum%13==9)
+	else if(cardnum%N_MAX_CARDNUM==9)
 		printf("9");
-	else if(cardnum%13==10)
+	else if(cardnum%N_MAX_CARDNUM==10)
 		printf("10");	
-	else if(cardnum%13==11)
+	else if(cardnum%N_MAX_CARDNUM==11)
 		printf("Jack");
-	else if(cardnum%13==12)
+	else if(cardnum%N_MAX_CARDNUM==12)
 		printf("Queen");
 	else 
 		printf("King");
@@ -196,37 +196,7 @@ int calcStepResult(int user,int cardcnt) {
 		sum+=getCardNum(cardhold[user][i]);
 		if (getCardNum(cardhold[user][i]) == 1)
 			NumA++;
-		/*
-		if(getCardNum(cardhold[user][i])==1)
-		{
-			sum+=getCardNum(cardhold[user][i]);
-			NumA++;
-			
-			if (NumA > 0  && sum <= 11)
-			{
-				sum = sum + 10;
-			}
-			
-			for(j=1;sum<=21 && j<=NumA;j++)
-			{
-				sum=sum+(10*j);
-				Acnt++;
-			}
-			
-			
-		}
-	
-		else
-		{
-			sum+=getCardNum(cardhold[user][i]);
-			
-			if(Acnt>0&&sum>21)
-			{
-				for(j=0;j<=Acnt;j++)
-					sum=sum-10*j;
-			}
-		}
-		*/
+		
 		
 	}
 	if (NumA > 0  && sum <= 11)
@@ -234,36 +204,6 @@ int calcStepResult(int user,int cardcnt) {
 		sum = sum + 10;
 	}
 	
-	
-	/*if(cardSum[user]==10)
-	{
-		if(NumA==1)
-		{
-			sum=sum+11;
-		}
-		else if(NumA>1)
-		{
-			sum=sum+NumA;
-		}
-	}
-	else if(cardSum[user]>10)
-	{
-		if(NumA>0)
-		{
-			sum=sum+NumA;
-		}
-	}
-	else if(cardSum[user]<10)
-	{
-		if(NumA==1)
-		{
-			sum=sum+11;
-		}
-		else if(NumA>1)
-		{
-			sum=sum+11+(NumA-1);
-		}
-	}*/
 	
  	cardSum[user]=sum;
  	

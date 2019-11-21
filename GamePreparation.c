@@ -17,7 +17,6 @@ extern blackjak[N_MAX_USER];
 extern winner[N_MAX_USER];
 extern win;
 
-extern cardorder;
 extern Cardcnt[N_MAX_USER];
 
 extern CardTray[N_CARDSET*N_CARD];
@@ -72,12 +71,15 @@ int mixCardTray(void) {
 //get one card from the tray
 int pullCard(void) {
 	
-   	cardorder++;	
-	if(cardorder==N_CARDSET*N_CARD)
-		{
-			gameEnd=1;
-		}
-	return CardTray[cardorder-1];
+	if(cardIndex<N_CARDSET*N_CARD)
+	{
+		cardIndex++;
+	}  
+	else if(cardIndex==N_CARDSET*N_CARD)
+	{
+		gameEnd=1;
+	}
+	return CardTray[cardIndex-1];
 	
 }
 
@@ -132,8 +134,19 @@ void offerCards(void) {
 //player settiing
 int configUser(void) {
 	
-	printf("input the number of players (MAX:5) : ");
+	
+	do
+	{
+		if(n_user>N_MAX_USER)
+		{
+			printf("I told you MAX number of players is %d :(\n",N_MAX_USER);
+		}
+		
+		printf("input the number of players (MAX:5) : ");
+		scanf("%d",&n_user);
+		
+	}while(n_user>N_MAX_USER);
 
-	scanf("%d",&n_user);
+
 }
 
