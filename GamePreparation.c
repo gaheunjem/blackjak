@@ -20,31 +20,27 @@ extern win;
 extern cardorder;
 extern Cardcnt[N_MAX_USER];
 
-//card tray object
 extern CardTray[N_CARDSET*N_CARD];
 extern cardIndex;	
 						
+extern dollar[N_MAX_USER];						
+extern n_user;									
 
-//player info
-extern dollar[N_MAX_USER];						//dollars that each player has
-extern n_user;									//number of users
-
-
-//play yard information
-extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];	//cards that currently the players hold
-extern cardSum[N_MAX_USER];					//sum of the cards
-extern bet[N_MAX_USER];						//current betting 
+extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];	
+extern cardSum[N_MAX_USER];					
+extern bet[N_MAX_USER];						 
 extern gameEnd; 	
 
-void swap(int* A, int* B) {//used in MixCardTray()
+void swap(int* A, int* B) //used in MixCardTray()
+{
     int temp;
  
 	temp = *A;
     *A = *B;
 	*B = temp;  
 }
-
-void rndCard(int* CardTray, int size) //used in MixCardTray()  
+//used in MixCardTray(), exchange random values from the first value of the array in order
+void rndCard(int* CardTray, int size)   
 {
     int i; 
 
@@ -77,7 +73,7 @@ int mixCardTray(void) {
 int pullCard(void) {
 	
    	cardorder++;	
-	if(cardorder>=N_CARDSET*N_CARD-1)
+	if(cardorder==N_CARDSET*N_CARD)
 		{
 			gameEnd=1;
 		}
@@ -117,10 +113,10 @@ int betDollar(void) {
 
 }
 
-//offering initial 2 cards /  
+//offering initial 2 cards   
 void offerCards(void) {
 	int i,j;
-	//1. give two card for each players and server
+	//give a card for each players and server twice, one by one
 	for(i=0;i<=1;i++)
 	{
 		for(j=0;j<n_user;j++)

@@ -20,20 +20,15 @@ extern win;
 extern cardorder;
 extern Cardcnt[N_MAX_USER];
 
-//card tray object
 extern CardTray[N_CARDSET*N_CARD];
 extern cardIndex;	
 						
+extern dollar[N_MAX_USER];						
+extern n_user;									
 
-//player info
-extern dollar[N_MAX_USER];						//dollars that each player has
-extern n_user;									//number of users
-
-
-//play yard information
-extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];	//cards that currently the players hold
-extern cardSum[N_MAX_USER];					//sum of the cards
-extern bet[N_MAX_USER];						//current betting 
+extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];	
+extern cardSum[N_MAX_USER];					
+extern bet[N_MAX_USER];						 
 extern gameEnd;
 
 int getIntegerInput(void) {
@@ -53,7 +48,7 @@ int getCardNum(int cardnum) {
 	
 	
 	if(cardnum%13==1)
-		return 11; 
+		return 1; 
 	else if(cardnum%13==2)
 		return 2;	
 	else if(cardnum%13==3)
@@ -157,7 +152,7 @@ void printCardInitialStatus(void) {
 		
 	
 }
-
+//decide GO! or STOP!
 int getAction(void) {
 	
 	int input;
@@ -191,23 +186,56 @@ void printUserCardStatus(int user, int cardcnt) {
 // calculate the card sum and see if : 1. under 21, 2. over 21, 3. blackjack
 int calcStepResult(int user,int cardcnt) {	
 	
-	int i;
+	int i,j;
 	int sum=0;
 	int NumA=0;
+	int Acnt=0;
 	
 	for(i=0;i<cardcnt;i++)
 	{
-		if(getCardNum(cardhold[user][i])!=11)
+		sum+=getCardNum(cardhold[user][i]);
+		if (getCardNum(cardhold[user][i]) == 1)
+			NumA++;
+		/*
+		if(getCardNum(cardhold[user][i])==1)
 		{
 			sum+=getCardNum(cardhold[user][i]);
-		}
-		else if(getCardNum(cardhold[user][i])==11)
-		{
 			NumA++;
+			
+			if (NumA > 0  && sum <= 11)
+			{
+				sum = sum + 10;
+			}
+			
+			for(j=1;sum<=21 && j<=NumA;j++)
+			{
+				sum=sum+(10*j);
+				Acnt++;
+			}
+			
+			
 		}
+	
+		else
+		{
+			sum+=getCardNum(cardhold[user][i]);
+			
+			if(Acnt>0&&sum>21)
+			{
+				for(j=0;j<=Acnt;j++)
+					sum=sum-10*j;
+			}
+		}
+		*/
+		
+	}
+	if (NumA > 0  && sum <= 11)
+	{
+		sum = sum + 10;
 	}
 	
-	if(cardSum[user]==10)
+	
+	/*if(cardSum[user]==10)
 	{
 		if(NumA==1)
 		{
@@ -235,7 +263,7 @@ int calcStepResult(int user,int cardcnt) {
 		{
 			sum=sum+11+(NumA-1);
 		}
-	}
+	}*/
 	
  	cardSum[user]=sum;
  	

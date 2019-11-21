@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = main.o 1.o
-LINKOBJ  = main.o 1.o
+OBJ      = PlayGame.o GamePreparation.o MiddleofGame.o AfterGame.o
+LINKOBJ  = PlayGame.o GamePreparation.o MiddleofGame.o AfterGame.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -24,8 +24,14 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-main.o: main.c
-	$(CC) -c main.c -o main.o $(CFLAGS)
+PlayGame.o: PlayGame.c
+	$(CC) -c PlayGame.c -o PlayGame.o $(CFLAGS)
 
-1.o: 1.c
-	$(CC) -c 1.c -o 1.o $(CFLAGS)
+GamePreparation.o: GamePreparation.c
+	$(CC) -c GamePreparation.c -o GamePreparation.o $(CFLAGS)
+
+MiddleofGame.o: MiddleofGame.c
+	$(CC) -c MiddleofGame.c -o MiddleofGame.o $(CFLAGS)
+
+AfterGame.o: AfterGame.c
+	$(CC) -c AfterGame.c -o AfterGame.o $(CFLAGS)

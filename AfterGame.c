@@ -20,22 +20,16 @@ extern win;
 extern cardorder;
 extern Cardcnt[N_MAX_USER];
 
-//card tray object
 extern CardTray[N_CARDSET*N_CARD];
 extern cardIndex;	
 						
+extern dollar[N_MAX_USER];						
+extern n_user;									
 
-//player info
-extern dollar[N_MAX_USER];						//dollars that each player has
-extern n_user;									//number of users
-
-
-//play yard information
-extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];	//cards that currently the players hold
-extern cardSum[N_MAX_USER];					//sum of the cards
-extern bet[N_MAX_USER];						//current betting 
+extern cardhold[N_MAX_USER+1][N_MAX_CARDHOLD];	
+extern cardSum[N_MAX_USER];					
+extern bet[N_MAX_USER];						 
 extern gameEnd;
-
 
 
 int checkResult() {
@@ -168,18 +162,23 @@ int checkWinner() {
 	int i;
 	int j;
 	
-	for(i=1;i<n_user;i++)
+	for(i=1;i<n_user;i++)//print each player's money result
 	{
 		printf("$%d ",dollar[i]);
 	}
 	
 	printf("\n");
 
-	for(i=0;i<n_user;i++)
+	for(i=0;i<n_user;i++)//initialize money ranking status
 	{
 		winner[i]=1;
 	}
 	
+	/* decide money ranking ex) winner[]={1,2,3}
+								=> <money ranking>
+								 	1. me
+								 	2. player 1
+								 	3. player 3*/
 	for(i=0;i<n_user;i++)
 	{
 		for(j=i+1;j<n_user;j++)
@@ -194,7 +193,7 @@ int checkWinner() {
 			}	
 		}	
 	}	
-	
+	// check who win first place on moneyranking
 	for(i=0;i<n_user;i++)
 	{
 		win=i;
